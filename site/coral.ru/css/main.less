@@ -595,3 +595,18 @@
 	}
 
 }
+
+#hotels-set .cards-grid .card-cell.ultra {
+	position: relative;
+	&:after {
+		content: '';
+		position: absolute;
+		width: 10em;
+		height: 10em * 58/196;
+		background: url("../iii/sfc-ultra-badge.png") center no-repeat;
+		background-size: contain;
+		top: 2.5em;
+		left: 1em;
+		transform: translateX(-8%);
+	}
+}

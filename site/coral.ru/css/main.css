@@ -970,3 +970,17 @@ body > div.contentLayout-BaseContainer > div.notcritical > div > div:nth-child(2
 #site-wrap .flickity-enabled {
   outline: none;
 }
+#hotels-set .cards-grid .card-cell.ultra {
+  position: relative;
+}
+#hotels-set .cards-grid .card-cell.ultra:after {
+  content: '';
+  position: absolute;
+  width: 10em;
+  height: 2.95918367em;
+  background: url("../iii/sfc-ultra-badge.png") center no-repeat;
+  background-size: contain;
+  top: 2.5em;
+  left: 1em;
+  transform: translateX(-8%);
+}
