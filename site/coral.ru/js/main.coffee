@@ -61,7 +61,7 @@ ASAP ->
         , 10
 
     preload 'https://cdnjs.cloudflare.com/ajax/libs/flickity/2.3.0/flickity.pkgd.min.js', ->
-        $('.opt-slider').flickity
+        $('.opt-slider, .ultra-slider').flickity
             cellSelector: '.slide'
             cellAlight: 'left'
             groupCells: yes
