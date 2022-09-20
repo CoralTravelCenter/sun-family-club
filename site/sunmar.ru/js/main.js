@@ -1,6 +1,6 @@
-var log, queryParam, trouble;
+var queryParam;
 
-window.ASAP = (function() {
+window.ASAP || (window.ASAP = (function() {
   var callall, fns;
   fns = [];
   callall = function() {
@@ -24,9 +24,9 @@ window.ASAP = (function() {
       return callall();
     }
   };
-})();
+})());
 
-log = function() {
+window.log || (window.log = function() {
   if (window.console && window.DEBUG) {
     if (typeof console.group === "function") {
       console.group(window.DEBUG);
@@ -38,9 +38,9 @@ log = function() {
     }
     return typeof console.groupEnd === "function" ? console.groupEnd() : void 0;
   }
-};
+});
 
-trouble = function() {
+window.trouble || (window.trouble = function() {
   var ref;
   if (window.console) {
     if (window.DEBUG) {
@@ -55,17 +55,17 @@ trouble = function() {
       return typeof console.groupEnd === "function" ? console.groupEnd() : void 0;
     }
   }
-};
+});
 
-window.preload = function(what, fn) {
+window.preload || (window.preload = function(what, fn) {
   var lib;
   if (!Array.isArray(what)) {
     what = [what];
   }
   return $.when.apply($, (function() {
-    var i, len1, results;
+    var i, len, results;
     results = [];
-    for (i = 0, len1 = what.length; i < len1; i++) {
+    for (i = 0, len = what.length; i < len; i++) {
       lib = what[i];
       results.push($.ajax(lib, {
         dataType: 'script',
@@ -76,9 +76,9 @@ window.preload = function(what, fn) {
   })()).done(function() {
     return typeof fn === "function" ? fn() : void 0;
   });
-};
+});
 
-window.queryParam = queryParam = function(p, nocase) {
+window.queryParam || (window.queryParam = queryParam = function(p, nocase) {
   var k, params, params_kv;
   params_kv = location.search.substr(1).split('&');
   params = {};
@@ -100,75 +100,36 @@ window.queryParam = queryParam = function(p, nocase) {
     }
   }
   return params;
-};
-
-String.prototype.zeroPad = function(len, c) {
-  var s;
-  s = '';
-  c || (c = '0');
-  len || (len = 2);
-  len -= this.length;
-  while (s.length < len) {
-    s += c;
-  }
-  return s + this;
-};
-
-Number.prototype.zeroPad = function(len, c) {
-  return String(this).zeroPad(len, c);
-};
+});
 
 window.DEBUG = 'APP NAME';
 
 ASAP(function() {
-  var responsiveHandler;
-  $('body .subpage-search-bg > .background').append($('#_intro_markup').html());
-  responsiveHandler = function(query, match_handler, unmatch_handler) {
-    var layout;
-    layout = matchMedia(query);
-    layout.addEventListener('change', function(e) {
-      if (e.matches) {
-        return match_handler();
-      } else {
-        return unmatch_handler();
-      }
+  $('[data-popin]').on('click', function() {
+    return $($(this).attr('data-popin')).addClass('shown');
+  });
+  $('.popin .dismiss').on('click', function() {
+    return $(this).closest('.shown').removeClass('shown');
+  });
+  $('.programs .buttonlike').on('click', function() {
+    var $this;
+    $this = $(this);
+    $this.addClass('red').siblings('.red').removeClass('red');
+    return setTimeout(function() {
+      return $('.flickity-enabled').flickity('resize');
+    }, 10);
+  });
+  return preload('https://cdnjs.cloudflare.com/ajax/libs/flickity/2.3.0/flickity.pkgd.min.js', function() {
+    $('.opt-slider, .ultra-slider').flickity({
+      cellSelector: '.slide',
+      cellAlight: 'left',
+      groupCells: true,
+      contain: true,
+      prevNextButtons: true,
+      pageDots: false
     });
-    if (layout.matches) {
-      match_handler();
-    } else {
-      unmatch_handler();
-    }
-    return layout;
-  };
-  return responsiveHandler('(max-width:768px)', function() {
-    var $player_el, p;
-    $player_el = $('.hidden-on-desktop[data-vimeo-id]');
-    p = new Vimeo.Player($player_el.get(0), {
-      id: $player_el.attr('data-vimeo-id'),
-      background: 1,
-      playsinline: 1,
-      autopause: 0,
-      title: 0,
-      byline: 0,
-      portrait: 0
-    });
-    return p.on('play', function() {
-      return $player_el.addClass('playback');
-    });
-  }, function() {
-    var $player_el, p;
-    $player_el = $('.hidden-on-mobile[data-vimeo-id]');
-    p = new Vimeo.Player($player_el.get(0), {
-      id: $player_el.attr('data-vimeo-id'),
-      background: 1,
-      playsinline: 1,
-      autopause: 0,
-      title: 0,
-      byline: 0,
-      portrait: 0
-    });
-    return p.on('play', function() {
-      return $player_el.addClass('playback');
-    });
+    return setTimeout(function() {
+      return $('.flickity-enabled').flickity('resize');
+    }, 100);
   });
 });
