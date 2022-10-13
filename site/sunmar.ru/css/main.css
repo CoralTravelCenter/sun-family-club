@@ -461,6 +461,13 @@ body > div.contentLayout-BaseContainer > div.notcritical > div > div:nth-child(2
 #site-wrap section.activities > .contenu .programs .program-details .common-descr .descr p {
   font-weight: normal;
 }
+#site-wrap section.activities > .contenu .programs .program-details .common-descr .descr p.note {
+  margin-top: 1em;
+  border-top: 1px solid #eee;
+  padding-top: 1em;
+  font-size: 80%;
+  color: #999;
+}
 #site-wrap section.activities > .contenu .programs .program-details .opt-slider {
   margin-top: 2em;
   position: relative;
